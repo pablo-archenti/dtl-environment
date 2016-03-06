@@ -1,0 +1,40 @@
+app:
+    build: ../dtl-app/
+    ports:
+        - "8100:8100"
+    working_dir: /app
+    volumes:
+        - ../dtl-app:/app
+    links:
+        - api
+    command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && cd ./www && python -m SimpleHTTPServer 8100"
+
+api:
+    build: ../dtl-api/
+    ports:
+        - "3030:3030"
+    working_dir: /app
+    volumes:
+        - ../dtl-api:/app
+    links:
+        - mysql
+    environment:
+        - NODE_ENV=development
+    command: bash -c "npm install && npm run start-dev"
+
+mysql:
+   build: mysql
+   ports:
+       - "3306:3306"
+   volumes_from:
+       - mysql-data
+   environment:
+       - USERNAME=root
+       - PASSWORD=verysecret
+       - MYSQL_ROOT_PASSWORD=verysecret
+
+mysql-data:
+ build: mysql/mysql-data
+ volumes:
+   - /var/lib/mysql
+ command: /bin/true
