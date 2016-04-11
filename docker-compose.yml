@@ -1,40 +1,69 @@
-app:
-    build: ../dtl-app/
-    ports:
-        - "8101:8101"
-    working_dir: /app
-    volumes:
-        - ../dtl-app:/app
-    links:
-        - api
-    command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && cd ./www && python -m SimpleHTTPServer 8101"
+version: "2"
 
-api:
-    build: ../dtl-api/
-    ports:
-        - "3030:3030"
-    working_dir: /app
-    volumes:
-        - ../dtl-api:/app
-    links:
-        - mysql
-    environment:
-        - NODE_ENV=development
-    command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run start-dev"
+services:
+    app:
+        build: images/app
+        container_name: dtl-app
+        ports:
+            - "8101:8101"
+        networks:
+            - my-net
+        working_dir: /app
+        volumes:
+            - ../dtl-app:/app
+        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && cd ./www && python -m SimpleHTTPServer 8101"
 
-mysql:
-   build: mysql
-   ports:
-       - "3306:3306"
-   volumes_from:
-       - mysql-data
-   environment:
-       - USERNAME=root
-       - PASSWORD=verysecret
-       - MYSQL_ROOT_PASSWORD=verysecret
+    api:
+        build: images/api
+        container_name: dtl-api
+        ports:
+            - "3030:3030"
+        networks:
+            - my-net
+        working_dir: /app
+        volumes:
+            - ../dtl-api:/app
+        depends_on:
+            - mysql
+        environment:
+            - NODE_ENV=development
+            - MYSQL_PORT=3306
+            - MYSQL_USERNAME=root
+            - MYSQL_PASSWORD=verysecret
+        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run start-dev"
 
-mysql-data:
- build: mysql/mysql-data
- volumes:
-   - /var/lib/mysql
- command: /bin/true
+    mysql:
+       build: images/mysql
+       container_name: dtl-mysql
+       ports:
+           - "3306:3306"
+       networks:
+           - my-net
+       volumes_from:
+           - mysql-data
+       environment:
+           - USERNAME=root
+           - PASSWORD=verysecret
+           - MYSQL_ROOT_PASSWORD=verysecret
+
+    selenium:
+        build: images/selenium
+        container_name: selenium
+        ports:
+            - "4444:4444"
+        networks:
+            - my-net
+
+    mysql-data:
+        build: images/mysql/mysql-data
+        volumes:
+            - mysqlvolume:/var/lib/mysql
+        command: /bin/true
+
+networks:
+    my-net:
+        driver: bridge
+
+volumes:
+    mysqlvolume:
+        driver: local

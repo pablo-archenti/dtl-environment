@@ -1,3 +1,30 @@
-# Desde tu lugar
+# Desde tu lugar - Development environment
 
-Development environment
+## Dependencies
+* [Docker 1.10](https://docs.docker.com/engine/installation/)
+* [Docker compose v1.6](https://docs.docker.com/compose/install/)
+
+## Configuration
+
+* Map host "api" to localhost
+
+## Run environment
+```
+    $ docker-compose up -d
+```
+
+## Access
+
+* App: http://localhost:8101/
+* Api swagger: http://localhost:3030/explorer (or http://api:3030/explorer)
+* Mysql: 127.0.0.1:3306
+
+## Run Mobile app unit tests
+```
+    $ docker-compose run app npm run test
+```
+
+## Run Mobile app functional tests
+```
+    $ docker-compose run app npm run test:functional
+```
