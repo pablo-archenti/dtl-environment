@@ -4,6 +4,9 @@ services:
     app:
         build: images/app
         container_name: dtl-app
+        depends_on:
+            - selenium
+            - api
         ports:
             - "8101:8101"
         networks:
@@ -16,6 +19,8 @@ services:
     api:
         build: images/api
         container_name: dtl-api
+        depends_on:
+            - mysql
         ports:
             - "3030:3030"
         networks:

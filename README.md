@@ -21,10 +21,10 @@
 
 ## Run Mobile app unit tests
 ```
-    $ docker-compose run app npm run test
+    $ ./unit-tests
 ```
 
 ## Run Mobile app functional tests
 ```
-    $ docker-compose run app npm run test:functional
+    $ ./functional-tests
 ```
