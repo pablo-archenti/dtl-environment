@@ -24,7 +24,7 @@
     $ ./unit-tests
 ```
 
-## Run Mobile app functional tests
+## Run Mobile app e2e tests
 ```
-    $ ./functional-tests
+    $ ./e2e-tests
 ```

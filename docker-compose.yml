@@ -3,7 +3,6 @@ version: "2"
 services:
     app:
         build: images/app
-        container_name: dtl-app
         depends_on:
             - selenium
             - api
@@ -18,7 +17,6 @@ services:
 
     api:
         build: images/api
-        container_name: dtl-api
         depends_on:
             - mysql
         ports:
@@ -39,17 +37,22 @@ services:
 
     mysql:
        build: images/mysql
-       container_name: dtl-mysql
        ports:
            - "3306:3306"
-       networks:
-           - my-net
        volumes_from:
            - mysql-data
+       networks:
+           - my-net
        environment:
            - USERNAME=root
            - PASSWORD=verysecret
            - MYSQL_ROOT_PASSWORD=verysecret
+
+    mysql-data:
+        build: images/mysql/mysql-data
+        volumes:
+            - mysqlvolume:/var/lib/mysql
+        command: /bin/true
 
     selenium:
         build: images/selenium
@@ -59,12 +62,6 @@ services:
         networks:
             - my-net
 
-    mysql-data:
-        build: images/mysql/mysql-data
-        volumes:
-            - mysqlvolume:/var/lib/mysql
-        command: /bin/true
-
 networks:
     my-net:
         driver: bridge
@@ -72,3 +69,4 @@ networks:
 volumes:
     mysqlvolume:
         driver: local
+
