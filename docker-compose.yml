@@ -4,7 +4,6 @@ services:
     app:
         build: images/app
         depends_on:
-            - selenium
             - api
         ports:
             - "8101:8101"
@@ -17,8 +16,6 @@ services:
 
     api:
         build: images/api
-        depends_on:
-            - mysql
         ports:
             - "3030:3030"
         networks:
@@ -26,14 +23,30 @@ services:
         working_dir: /app
         volumes:
             - ../dtl-api:/app
-        depends_on:
-            - mysql
         environment:
             - NODE_ENV=development
+            - MYSQL_HOST=mysql
             - MYSQL_PORT=3306
             - MYSQL_USERNAME=root
             - MYSQL_PASSWORD=verysecret
-        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run start-dev"
+        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run db-development-create && npm run start-dev"
+
+    api-testing:
+        build: images/api
+        ports:
+            - "3031:3030"
+        networks:
+            - my-net
+        working_dir: /app
+        volumes:
+            - ../dtl-api:/app
+        environment:
+            - NODE_ENV=testing
+            - MYSQL_HOST=mysql
+            - MYSQL_PORT=3306
+            - MYSQL_USERNAME=root
+            - MYSQL_PASSWORD=verysecret
+        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run db-testing-create && npm run start-dev"
 
     mysql:
        build: images/mysql
@@ -46,7 +59,6 @@ services:
        environment:
            - USERNAME=root
            - PASSWORD=verysecret
-           - MYSQL_ROOT_PASSWORD=verysecret
 
     mysql-data:
         build: images/mysql/mysql-data
@@ -69,4 +81,3 @@ networks:
 volumes:
     mysqlvolume:
         driver: local
-
