@@ -6,14 +6,14 @@
 
 ## Configuration
 
-* Map host "api" and "api-testing" to localhost
+* Map hosts "api" and "api-testing" to localhost
 
 ## Start environment
 ```
     $ docker-compose up -d
 ```
 
-## Dump DB data
+## Dump DB dev data
 ```
     $ ./db-data
 ```
