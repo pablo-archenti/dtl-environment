@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker-compose run --rm api-testing npm run db-testing-create
+./db-testing
 docker-compose run --rm app npm run test:e2e  -- --seleniumAddress="http://selenium:4444/wd/hub" $@

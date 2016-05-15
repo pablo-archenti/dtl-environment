@@ -13,15 +13,15 @@
     $ docker-compose up -d
 ```
 
-## Dump DB dev data
+## Dump Data to DB for development
 ```
-    $ ./db-data
+    $ ./db-development-data
 ```
 
 ## Access
 
 * App: http://localhost:8101/
-* Api swagger: http://api:3030/explorer
+* Api swagger: http://localhost:3030/explorer
 * Mysql: 127.0.0.1:3306
 
 ## Run Mobile app unit tests
@@ -35,11 +35,7 @@
 ```
 
 ## Other DB commands
-Load DB schema
+Recreate DB for e2e tests
 ```
-    $ ./db-schema
-```
-Load DB data
-```
-    $ ./db-data
+    $ ./db-testing
 ```
