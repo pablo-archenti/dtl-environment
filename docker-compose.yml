@@ -34,7 +34,7 @@ services:
     api-testing:
         build: images/api
         ports:
-            - "3031:3030"
+            - "3031:3031"
         networks:
             - my-net
         working_dir: /app
