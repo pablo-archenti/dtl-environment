@@ -29,7 +29,7 @@ services:
             - MYSQL_PORT=3306
             - MYSQL_USERNAME=root
             - MYSQL_PASSWORD=verysecret
-        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run db-development-create && npm run start-dev"
+        command: bash -c "npm install && npm run db-development-create && npm run start-dev"
 
     api-testing:
         build: images/api
@@ -46,7 +46,7 @@ services:
             - MYSQL_PORT=3306
             - MYSQL_USERNAME=root
             - MYSQL_PASSWORD=verysecret
-        command: bash -c "npm install && node_modules/bower/bin/bower install --allow-root && npm run db-testing-create && npm run start-dev"
+        command: bash -c "npm install && npm run db-testing-create && npm run start-dev"
 
     mysql:
        build: images/mysql
