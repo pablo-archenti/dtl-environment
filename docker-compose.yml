@@ -57,8 +57,8 @@ services:
        networks:
            - my-net
        environment:
-           - USERNAME=root
-           - PASSWORD=verysecret
+           - MYSQL_ROOT_USERNAME=root
+           - MYSQL_ROOT_PASSWORD=verysecret
 
     mysql-data:
         build: images/mysql/mysql-data
