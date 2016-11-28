@@ -23,6 +23,7 @@ services:
         working_dir: /app
         volumes:
             - ../dtl-api:/app
+            - ../dtl-app:/dtl-app
         environment:
             - NODE_ENV=development
             - MYSQL_HOST=mysql
