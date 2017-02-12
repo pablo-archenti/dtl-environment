@@ -47,7 +47,7 @@ services:
             - MYSQL_PORT=3306
             - MYSQL_USERNAME=root
             - MYSQL_PASSWORD=verysecret
-        command: bash -c "npm install && npm run start-dev"
+        command: bash -c "npm install && npm run db-testing && npm run start-dev"
 
     mysql:
        build: images/mysql

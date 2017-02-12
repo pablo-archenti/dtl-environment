@@ -3,7 +3,7 @@
 NPM_CMD='test'
 
 if [ "$1" == "--watch" ] ; then
-    NPM_CMD='run test:watch'
+    NPM_CMD='test:watch'
 fi
 
-docker-compose run --rm --no-deps app npm $NPM_CMD
+docker-compose run --rm --no-deps app npm run $NPM_CMD

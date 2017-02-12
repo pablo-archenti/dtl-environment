@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker-compose run --rm api-testing npm run db-testing-create
-docker-compose run --rm api-testing npm run db-testing-data
+docker-compose run --rm api-testing npm run db-testing
