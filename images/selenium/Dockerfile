@@ -1,1 +1,1 @@
-FROM selenium/standalone-chrome
+FROM selenium/standalone-chrome-debug
